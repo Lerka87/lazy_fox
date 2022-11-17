@@ -15,6 +15,7 @@ class BlogCategory(models.Model):
 class Article(models.Model):
 
     category = models.ForeignKey(to=BlogCategory, verbose_name='Категорія', on_delete=models.CASCADE)
+
     title = models.CharField(verbose_name='Заголовок', max_length=255)
     text_preview = models.TextField(verbose_name="Текст-прев'ю", null=True, blank=True)
     text = models.TextField(verbose_name='Текст')
@@ -28,3 +29,15 @@ class Article(models.Model):
     class Meta:
         verbose_name = 'Стаття'
         verbose_name_plural = 'Статті'
+
+
+class Tag(models.Model):
+    name = models.CharField(verbose_name="Напишіть сюди свій тег", max_length=255)
+    tags = models.ManyToManyField(to=Article, related_name='Теги')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
