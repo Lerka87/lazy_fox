@@ -33,7 +33,7 @@ class Article(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(verbose_name="Напишіть сюди свій тег", max_length=255)
-    tags = models.ManyToManyField(to=Article, related_name='Теги')
+    tag_article = models.ManyToManyField(to=Article, related_name='Теги')
 
     def __str__(self):
         return self.name
