@@ -15,20 +15,6 @@
   },
   {
     "model": "blog.blogcategory",
-    "pk": 3,
-    "fields": {
-      "name": "Про нього"
-    }
-  },
-  {
-    "model": "blog.blogcategory",
-    "pk": 4,
-    "fields": {
-      "name": "Про неї"
-    }
-  },
-  {
-    "model": "blog.blogcategory",
     "pk": 5,
     "fields": {
       "name": "Гороскоп"
