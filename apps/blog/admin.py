@@ -3,7 +3,6 @@ from apps.blog.models import BlogCategory, Article, Tag
 from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.http import urlencode
-from django.utils.safestring import mark_safe
 
 
 admin.site.register(Tag)
@@ -38,14 +37,21 @@ class ArticlaAdmin(admin.ModelAdmin):
 
     def tag_list(self, instance):
         tags = instance.tag.all()
-        string_html = ''
-        for i in range(len(tags)):
-            string = str(tags[i])
-            if i != 0:
-                string_html += ', '
-            string_html += f"<a href='{reverse('admin:blog_tag_change', args=[tags[i].id])}'>{string}</a>"
-        if tags:
-            return format_html(string_html)
+        # string_html = ''
+        # for i in range(len(tags)):
+        #     if i != 0:
+        #         string_html += ', '
+        #     string_html += f"<a href='{reverse('admin:blog_tag_change', args=[tags[i].id])}'>{tags[i].name}</a>"
+        # if tags:
+        #     return format_html(string_html)
+
+        data = []
+        for tag in tags:
+            url = reverse('admin:blog_tag_change', args=[tag.id])
+            data.append(f"<a href='{url}'>{tag.name}</a>")
+        # data = str(data)[1:-1]
+        result = ', '.join(data)
+        return format_html(result)
 
     tag_list.short_description = 'Теги'
 
