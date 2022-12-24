@@ -24,8 +24,8 @@ class BlogCategoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Article)
-class ArticlaAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'category_link', 'tag_list', 'created_at']
+class ArticleAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'category_link', 'user_link', 'tag_list', 'created_at']
     list_display_links = ['id', 'title']
     list_filter = ['category', 'tag']
 
@@ -34,6 +34,13 @@ class ArticlaAdmin(admin.ModelAdmin):
         return format_html(f"<a href='{url}'>{instance.category.name}</a>")
 
     category_link.short_description = 'Категорії'
+
+    def user_link(self, instance):
+        if instance.user:
+            url = reverse('admin:user_user_change', args=[instance.user.id])
+            return format_html(f"<a href='{url}'>{instance.user}</a>")
+
+    user_link.short_description = 'Автор'
 
     def tag_list(self, instance):
         tags = instance.tag.all()

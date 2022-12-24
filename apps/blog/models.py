@@ -2,6 +2,8 @@ from django.db import models
 from imagekit.models import ProcessedImageField, ImageSpecField
 from pilkit.processors import ResizeToFill
 from django.utils.safestring import mark_safe
+
+from apps.user.models import User
 from config.settings import MEDIA_ROOT
 
 
@@ -56,6 +58,7 @@ class Article(models.Model):
     title = models.CharField(verbose_name='Заголовок', max_length=255)
     text_preview = models.TextField(verbose_name="Текст-прев'ю", null=True, blank=True)
     text = models.TextField(verbose_name='Текст')
+    user = models.ForeignKey(to=User, verbose_name='Автор', on_delete=models.CASCADE, null=True, blank=True)
     tag = models.ManyToManyField(to=Tag, verbose_name='Теги', blank=True)
     image = ProcessedImageField(
         verbose_name='Картинка',
