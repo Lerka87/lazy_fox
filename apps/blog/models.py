@@ -54,11 +54,11 @@ class Tag(models.Model):
 class Article(models.Model):
 
     category = models.ForeignKey(to=BlogCategory, verbose_name='Категорія', on_delete=models.CASCADE)
+    user = models.ForeignKey(to=User, verbose_name='Автор', on_delete=models.SET_NULL, null=True, blank=True)
 
     title = models.CharField(verbose_name='Заголовок', max_length=255)
     text_preview = models.TextField(verbose_name="Текст-прев'ю", null=True, blank=True)
     text = models.TextField(verbose_name='Текст')
-    user = models.ForeignKey(to=User, verbose_name='Автор', on_delete=models.CASCADE, null=True, blank=True)
     tag = models.ManyToManyField(to=Tag, verbose_name='Теги', blank=True)
     image = ProcessedImageField(
         verbose_name='Картинка',
