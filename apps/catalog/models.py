@@ -47,6 +47,9 @@ class Category(MPTTModel):
             parent = parent.parent
         return ' -> '.join(full_path[::-1])
 
+    def get_absolute_url(self):
+        return reverse('categories', args=[self.slug])
+
     class Meta:
         verbose_name='Категорія',
         verbose_name_plural='Категорії'
@@ -58,8 +61,9 @@ class Product(models.Model):
     description = models.TextField(verbose_name='Опис', null=True, blank=True)
     quantity = models.IntegerField(verbose_name='кількість товару', null=True, blank=True)
     price = models.DecimalField(verbose_name='Ціна', max_digits=12, decimal_places=2, default=0)
-    updated_at = models.DateTimeField(verbose_name='Дата зміни')
-    created_at = models.DateTimeField(verbose_name='Дата створення')
+    categories = models.ManyToManyField(to=Category, verbose_name='Категорії', through='ProductCategory', blank=True)
+    updated_at = models.DateTimeField(verbose_name='Дата зміни', auto_now=True)
+    created_at = models.DateTimeField(verbose_name='Дата створення', auto_now_add=True)
 
 
     def __str__(self):
@@ -69,3 +73,17 @@ class Product(models.Model):
         verbose_name='Продукт'
         verbose_name_plural='Продукти'
 
+
+class ProductCategory(models.Model):
+    category = models.ForeignKey(to=Category, on_delete=models.CASCADE, verbose_name='Категорія')
+    product = models.ForeignKey(to=Product, on_delete=models.CASCADE, verbose_name='Товар')
+    is_main = models.BooleanField(verbose_name='Основна категорія', default=False)
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        if self.is_main:
+            ProductCategory.objects.filter(product=self.product).update(is_main=False)
+        super().save(force_insert, force_update, using, update_fields)
+
+    class Meta:
+        verbose_name='Категорія товара'
+        verbose_name_plural='Категорії товаров'
