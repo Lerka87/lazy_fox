@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
     <div class="product-view">
         <h3 class="my-header">{{ product.name }}</h3>
@@ -6,7 +7,8 @@
 
             <div class="col-xs-12 col-md-6">
                 <div class="row">
-                    {% for image in product.images %}
+                    {% if product.images %}
+                        {% for image in product.images %}
                         <div class="col-6">
                         <a href="{{ image.image.url }}" class="product-image"
                            data-lightbox="roadtrip">
@@ -15,6 +17,17 @@
                         </a>
                     </div>
                     {% endfor %}
+
+                    {% else %}
+                        <div class="col-6">
+                        <a href="{% static 'img/no-image.png' %}" class="product-image"
+                           data-lightbox="roadtrip">
+                            <img src="{% static 'img/no-image.png' %}" alt=""
+                                 class="img-thumbnail">
+                        </a>
+                    </div>
+                    {% endif %}
+
                 </div>
             </div>
 
