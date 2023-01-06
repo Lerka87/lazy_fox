@@ -7,26 +7,15 @@
 
             <div class="col-xs-12 col-md-6">
                 <div class="row">
-                    {% if product.images %}
-                        {% for image in product.images %}
-                        <div class="col-6">
-                        <a href="{{ image.image.url }}" class="product-image"
-                           data-lightbox="roadtrip">
+                     {% for image in product.images %}
+                         <div class="col-6">
+                         <a href="{{ image.image.url }}" class="product-image"
+                            data-lightbox="roadtrip">
                             <img src="{{ image.image_thumbnail.url }}" alt=""
-                                 class="img-thumbnail">
-                        </a>
-                    </div>
+                               class="img-thumbnail">
+                            </a>
+                        </div>
                     {% endfor %}
-
-                    {% else %}
-                        <div class="col-6">
-                        <a href="{% static 'img/no-image.png' %}" class="product-image"
-                           data-lightbox="roadtrip">
-                            <img src="{% static 'img/no-image.png' %}" alt=""
-                                 class="img-thumbnail">
-                        </a>
-                    </div>
-                    {% endif %}
 
                 </div>
             </div>
@@ -34,12 +23,14 @@
             <div class="col-xs-12 col-md-6">
                 {% if product.quantity > 0 %}
                     <p>Наявність: <b class="text-success">В наявності</b></p>
+                {% elif product.quantity < 5 and product.quantity > 0 %}
+                    <p>Наявність: <b class="text-warning">Закінчується</b></p>
                 {% else %}
-                    <p>Наявність: <b class="text-success">Не в наявності</b></p>
+                    <p>Наявність: <b class="text-danger">Не в наявності</b></p>
                 {% endif %}
 
 
-                <b class="text-danger product-price">{{ product.price }}</b>
+                <b class="text-danger product-price">{{ product.price }} грн</b>
                 <form action="">
                     <div class="input-group mb-3">
                         <input type="number" min="1" step="1" max="100" value="1" class="form-control">
