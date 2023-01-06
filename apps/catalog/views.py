@@ -29,17 +29,3 @@ class ProductDetailView(generic.DetailView):
     model = Product
     template_name = 'catalog/product.html'
 
-    def get_q(self):
-        queryset = Product.objects.get(id=self.id)
-
-
-class ProductsListView(generic.ListView):
-    model = Product
-    template_name = 'catalog/_products.html'
-
-    def get_q(self):
-        queryset = Product.objects.filter(categories=self.categories)
-
-
-
-
