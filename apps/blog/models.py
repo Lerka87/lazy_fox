@@ -3,11 +3,12 @@ from imagekit.models import ProcessedImageField, ImageSpecField
 from pilkit.processors import ResizeToFill
 from django.utils.safestring import mark_safe
 
+from apps.main.mixins import MetaTagMixin
 from apps.user.models import User
 from config.settings import MEDIA_ROOT
 
 
-class BlogCategory(models.Model):
+class BlogCategory(MetaTagMixin):
     name = models.CharField(verbose_name="Ім'я категорії", max_length=255)
     # image = models.ImageField(verbose_name='Картинка', upload_to='blog/categoty/', null=True)
     image = ProcessedImageField(
@@ -40,7 +41,7 @@ class BlogCategory(models.Model):
 
 
 
-class Tag(models.Model):
+class Tag(MetaTagMixin):
     name = models.CharField(verbose_name="Напишіть сюди свій тег", max_length=255)
 
     def __str__(self):
@@ -51,12 +52,12 @@ class Tag(models.Model):
         verbose_name_plural = 'Теги'
 
 
-class Article(models.Model):
+class Article(MetaTagMixin):
 
     category = models.ForeignKey(to=BlogCategory, verbose_name='Категорія', on_delete=models.CASCADE)
     user = models.ForeignKey(to=User, verbose_name='Автор', on_delete=models.SET_NULL, null=True, blank=True)
 
-    title = models.CharField(verbose_name='Заголовок', max_length=255)
+    name = models.CharField(verbose_name='Заголовок', max_length=255)
     text_preview = models.TextField(verbose_name="Текст-прев'ю", null=True, blank=True)
     text = models.TextField(verbose_name='Текст')
     tag = models.ManyToManyField(to=Tag, verbose_name='Теги', blank=True)
@@ -75,7 +76,7 @@ class Article(models.Model):
     created_at = models.DateTimeField(verbose_name='Дата створення', auto_now_add=True)
 
     def __str__(self):
-        return self.title
+        return self.name
 
     class Meta:
         verbose_name = 'Стаття'
