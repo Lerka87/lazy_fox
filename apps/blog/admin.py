@@ -25,8 +25,8 @@ class BlogCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'category_link', 'user_link', 'tag_list', 'created_at']
-    list_display_links = ['id', 'name']
+    list_display = ['id', 'title', 'category_link', 'user_link', 'tag_list', 'created_at']
+    list_display_links = ['id', 'title']
     list_filter = ['category', 'tag']
 
     def category_link(self, instance):
