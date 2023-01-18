@@ -9,6 +9,7 @@ from config.settings import MEDIA_ROOT
 
 
 class User(AbstractUser):
+    about = models.TextField(verbose_name="Про себе", blank=True, null=True)
     phone = PhoneNumberField(verbose_name='Номер телефона', blank=True, null=True)
     image = ProcessedImageField(
         verbose_name='Картинка',
