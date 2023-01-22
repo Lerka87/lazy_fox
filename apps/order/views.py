@@ -36,3 +36,11 @@ def add_to_cart(request):
             {"product": cd['product'], "cart": get_cart_data(cd['user'])}
         )
 
+
+def cart(request):
+    breadcrumbs = {'current': 'Кошик'}
+    return render(
+        request,
+        'order/cart.html',
+        {"cart": get_cart_data(request.user), 'breadcrumbs': breadcrumbs}
+    )
