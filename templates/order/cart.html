@@ -9,7 +9,13 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Кошик</h1>
+    <h3 class="my-header">Кошик</h3>
     {% include 'order/_cart.html' %}
+
+    {% if cart.total %}
+        <p class="text-center">
+            <a href="{% url 'create_order' %}" class="btn btn-success">Оформити замовлення</a>
+        </p>
+    {% endif %}
 
 {% endblock %}
