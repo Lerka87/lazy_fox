@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 
 from apps.order.forms import AddToCartForm, CreateOrderForm
 from apps.order.models import Cart
@@ -30,10 +31,11 @@ def add_to_cart(request):
         else:
             form.save()
 
+        breadcrumbs = {'current': 'Додано у кошик'}
         return render(
             request,
             'order/added.html',
-            {"product": cd['product'], "cart": get_cart_data(cd['user'])}
+            {"product": cd['product'], "cart": get_cart_data(cd['user']), 'breadcrumbs': breadcrumbs}
         )
 
 
@@ -64,7 +66,12 @@ def create_order_view(request):
         if form.is_valid():
             form.save()
             Cart.objects.filter(user=user).delete()
-            return render(request, 'order/created.html')
+            breadcrumbs = {
+                reverse('cart'): 'Кошик',
+                # reverse('create_order'): 'Оформлення замовлення',
+                'current': 'Замовлення створено'
+            }
+            return render(request, 'order/created.html', {'breadcrumbs': breadcrumbs})
         error = form.errors
 
     else:
@@ -74,4 +81,8 @@ def create_order_view(request):
             'last_name': user.last_name,
             'email': user.email
         })
-    return render(request, 'order/create.html', {'cart': cart, 'error': error, 'form': form})
+    breadcrumbs = {
+        reverse('cart'): 'Кошик',
+        'current': 'Оформлення замовлення'
+    }
+    return render(request, 'order/create.html', {'cart': cart, 'error': error, 'form': form, 'breadcrumbs': breadcrumbs})
