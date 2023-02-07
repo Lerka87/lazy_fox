@@ -30,3 +30,14 @@ class Order(models.Model):
     class Meta:
         verbose_name = 'Замовлення'
         verbose_name_plural = 'Замовлення'
+
+
+class OrderProduct(models.Model):
+    order = models.ForeignKey(to=Order, verbose_name='Замовлення', on_delete=models.CASCADE)
+    product = models.ForeignKey(to=Product, verbose_name='Продукт', null=True, on_delete=models.SET_NULL)
+    price = models.DecimalField(verbose_name='Ціна', max_digits=12, decimal_places=2)
+    quantity = models.PositiveIntegerField(verbose_name='Кількість')
+
+    class Meta:
+        verbose_name = 'Товар замовлення'
+        verbose_name_plural = 'Товари замовлення'
