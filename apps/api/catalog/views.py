@@ -31,3 +31,29 @@ class ProductDeleteView(generics.DestroyAPIView):
     permission_classes = [permissions.IsAdminUser]
 
 
+class CategoryListView(generics.ListAPIView):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+
+
+class CategoryDetailView(generics.RetrieveAPIView):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+
+
+class CategoryCreateView(generics.CreateAPIView):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+    permission_classes = [permissions.IsAdminUser]
+
+
+class CategoryUpdateView(generics.UpdateAPIView):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+    permission_classes = [permissions.IsAdminUser]
+
+
+class CategoryDeleteView(generics.DestroyAPIView):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+    permission_classes = [permissions.IsAdminUser]
