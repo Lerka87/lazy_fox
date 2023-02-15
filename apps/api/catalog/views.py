@@ -1,6 +1,6 @@
 from rest_framework import generics, permissions, viewsets
 from apps.catalog.models import Category, Product, ProductImage
-from apps.api.catalog.serializer import CategorySerializer, ProductReadSerializer,\
+from apps.api.catalog.serializers import CategorySerializer, ProductReadSerializer,\
     ProductWriteSerializer, ProductImageSerializer
 
 
