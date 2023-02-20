@@ -62,4 +62,4 @@ class ArticleViewSet(viewsets.ModelViewSet):
         article = serializer.save(tag=tags)
         read_serializer = self.serializer_class(article, context={'request': request})
 
-        return Response(read_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(read_serializer.data, status=status.HTTP_200_OK)
