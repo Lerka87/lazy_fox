@@ -14,5 +14,17 @@
       "name": "Оплата і доставка",
       "slug": "payment-and-shipping"
     }
+  },
+  {
+    "model": "main.page",
+    "pk": 3,
+    "fields": {
+      "name": "Контакти",
+      "text": "номер телефону ношого менеджера: ",
+      "meta_title": "Контакти",
+      "meta_description": "контакти нашого магазину",
+      "meta_keywords" : "контакти, телефон, номера",
+      "slug": "contacts"
+    }
   }
 ]

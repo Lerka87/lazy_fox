@@ -4,4 +4,4 @@ from apps.main.models import Page
 
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
-    readonly_fields = ['slug']
+    pass
