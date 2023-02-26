@@ -33,15 +33,6 @@
         Категорія: <b>{{ category.name }}</b>
     </p>
 
-{#    {% if article.user %}#}
-{#        <p style="text-align: right">#}
-{#            <b>автор: </b>{{ article.user.first_name }} {{ article.user.last_name }}#}
-{#        </p>#}
-{#        {% if article.user.image %}#}
-{#            <img class='img-thumbnail' src="{{ article.user.image_thumbnail.url }}" alt="">#}
-{#        {% endif %}#}
-{#    {% endif %}#}
-
     {% if article.user %}
         <div class="text-end">
             <div class="author">
@@ -58,6 +49,39 @@
             </div>
         </div>
     {% endif %}
+
+    {% for comment in comments %}
+        <h4>{{ comment.name }}</h4><h5>{{ comment.text }}</h5>
+    {% endfor %}
+
+
+    <h3 class="my-header">Добавити комент</h3>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="name" class="form-label">Ім'я</label>
+                    <input type="text" class="form-control" id="name" name="name" value="{{ form.data.name }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-mail</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ form.data.email }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="text" class="form-label">Текст</label>
+                    <textarea name="text" id="text" class="form-control" rows="3">{{ form.data.text }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-success">Створити коментарій</button>
+            </form>
+        </div>
+    </div>
 
 
 {% endblock %}
